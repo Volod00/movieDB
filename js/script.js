@@ -1,4 +1,5 @@
-document.addEventListener('DOMContentLoaded', ()=>{
+document.addEventListener('DOMContentLoaded', () => {
+
 const title = document.querySelector('.promo__interactive-title');
 const list = document.querySelector('.promo__interactive-list');
 const addForm = document.querySelector('form.add');
@@ -44,16 +45,29 @@ function createMovieList(films, parent){
             <div class="delete"></div>
         </li> `;
     });
-}
+    
+    document.querySelectorAll('.delete').forEach((btn, i) =>{
+        btn.addEventListener('click', () => {
+            btn.parentElement.remove();
+            movieDB.movies.splice(i,1);
+        });
+    });
+};
 createMovieList(movieDB.movies, list);
 
 addForm.addEventListener('submit', (e) => {
     e.preventDefault();
     let newFilm = input.value;
     let fauvorite = checkbox.checked;
+    
+    if (newFilm){
+        if (newFilm.length>21){
+            newFilm = `${newFilm.substring(0,22)}...`;
+        }
     movieDB.movies.push(newFilm);
     sortArray(movieDB.movies);
     createMovieList(movieDB.movies, list);
+    }
     e.target.reset();
 });
 
