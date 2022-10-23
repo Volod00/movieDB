@@ -39,6 +39,7 @@ sortArray(movieDB.movies);
 
 function createMovieList(films, parent){
     parent.innerHTML = "";
+    sortArray(films);
     films.forEach((film,item)=>{
     parent.innerHTML += `
     <li class="promo__interactive-item">${item+1}:${film}
@@ -50,6 +51,8 @@ function createMovieList(films, parent){
         btn.addEventListener('click', () => {
             btn.parentElement.remove();
             movieDB.movies.splice(i,1);
+
+            createMovieList(films, parent)
         });
     });
 };
@@ -60,7 +63,11 @@ addForm.addEventListener('submit', (e) => {
     let newFilm = input.value;
     let fauvorite = checkbox.checked;
     
-    if (newFilm){
+    if (fauvorite){
+        console.log("favourite movie");
+    }
+    
+        if (newFilm){
         if (newFilm.length>21){
             newFilm = `${newFilm.substring(0,22)}...`;
         }
